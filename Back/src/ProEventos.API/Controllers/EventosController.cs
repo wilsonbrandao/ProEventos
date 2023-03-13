@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ProEventos.API.Data;
-using ProEventos.API.Models;
+using ProEventos.Persistence;
+using ProEventos.Domain;
+using ProEventos.Persistence.Context;
 
 namespace ProEventos.API.Controllers
 {
@@ -29,7 +30,7 @@ namespace ProEventos.API.Controllers
         [HttpGet("{id}")]
         public Evento GetById(int id)
         {
-            return _context.Eventos.Where(evento => evento.EventoId == id).FirstOrDefault();
+            return _context.Eventos.Where(evento => evento.Id == id).FirstOrDefault();
         }
 
         [HttpPost]

@@ -13,7 +13,7 @@ namespace ProEventos.Domain
         public string Nome { get; set; }
         public string URl { get; set; }
         public int? EventoId { get; set; }
-        public Evento evento { get; set; }
+        public Evento Evento { get; set; }
         public int? PalestranteId { get; set; }
         public Palestrante Palestrante { get; set; }
     }

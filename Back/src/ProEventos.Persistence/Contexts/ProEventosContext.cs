@@ -14,6 +14,12 @@ namespace ProEventos.Persistence.Contexts
 
         }
 
+        public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Lote> Lotes { get; set; }
+        public DbSet<Palestrante> Palestrantes { get; set; }
+        public DbSet<PalestranteEvento> PalestranteEventos { get; set; }
+        public DbSet<RedeSocial> RedeSociais { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PalestranteEvento>()
@@ -21,12 +27,16 @@ namespace ProEventos.Persistence.Contexts
             //The EF recognizes the evento and palestrante foreign key by convention
             .HasKey(palestranteEvento => 
             new { palestranteEvento.EventoId, palestranteEvento.PalestranteId });
-        }
 
-        public DbSet<Evento> Eventos { get; set; }
-        public DbSet<Lote> Lotes { get; set; }
-        public DbSet<Palestrante> Palestrantes { get; set; }
-        public DbSet<PalestranteEvento> PalestranteEventos { get; set; }
-        public DbSet<RedeSocial> RedeSociais { get; set; }
+            modelBuilder.Entity<Evento>()
+            .HasMany(evento => evento.RedeSociais)
+            .WithOne(redeSocial => redeSocial.Evento)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Palestrante>()
+            .HasMany(palestrante => palestrante.RedeSociais)
+            .WithOne(redeSocial => redeSocial.Palestrante)
+            .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
